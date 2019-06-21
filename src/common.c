@@ -66,6 +66,7 @@ const static struct option longopts[] = {
     { "htdocs", required_argument, NULL, 'd' },
     { "help", no_argument, NULL, 'h' },
     { "proxy", required_argument, NULL, 'p' },
+    { "abort-on-fail", no_argument, NULL, 'f' },
 #if 0
     { "colour", no_argument, NULL, 'c' },
     { "no-colour", no_argument, NULL, 'n' },
@@ -144,7 +145,7 @@ int init(void)
     char *proxy_url = NULL;
 
     while ((optc = getopt_long(test_argc, test_argv, 
-			       "d:hp", longopts, NULL)) != -1) {
+			       "d:hfp", longopts, NULL)) != -1) {
 	switch (optc) {
 	case 'd':
 	    htdocs_root = optarg;
@@ -152,6 +153,9 @@ int init(void)
 	case 'p':
 	    proxy_url = optarg;
 	    break;
+    case 'f':
+        abort_on_fail = 1;
+        break;
 	case 'h':
 	    usage(stdout);
 	    exit(1);

@@ -70,6 +70,9 @@ extern int test_num;
 /* name of test suite */
 extern const char *test_suite;
 
+/* test behavior flags */
+extern int abort_on_fail;
+
 /* Provide result context message. */
 void t_context(const char *ctx, ...)
 #ifdef __GNUC__
