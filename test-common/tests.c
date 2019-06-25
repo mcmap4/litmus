@@ -60,6 +60,7 @@ const char *test_suite;
 int test_num;
 
 int abort_on_fail = 0;
+int abort_on_warning = 0;
 
 /* statistics for all tests so far */
 static int passes = 0, fails = 0, skipped = 0, warnings = 0;
@@ -311,8 +312,13 @@ int main(int argc, char *argv[])
 
 	reap_server();
 
-        if (abort_on_fail && (fails > 0)) {
+        if (abort_on_fail && (fails >= abort_on_fail)) {
             printf("==>[abort-on-fail=true], aborting tests on first failure.\n");
+            break;
+        }
+        
+        if (abort_on_warning && (warned > abort_on_warning)) {
+            printf("==>[abort-on-warning=true], aborting tests on first warning.\n");
             break;
         }
     }

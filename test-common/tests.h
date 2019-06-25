@@ -72,6 +72,7 @@ extern const char *test_suite;
 
 /* test behavior flags */
 extern int abort_on_fail;
+extern int abort_on_warning;
 
 /* Provide result context message. */
 void t_context(const char *ctx, ...)

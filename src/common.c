@@ -66,7 +66,8 @@ const static struct option longopts[] = {
     { "htdocs", required_argument, NULL, 'd' },
     { "help", no_argument, NULL, 'h' },
     { "proxy", required_argument, NULL, 'p' },
-    { "abort-on-fail", no_argument, NULL, 'f' },
+    { "abort-on-fail", optional_argument, NULL, 'f' },
+    { "abort-on-warning", optional_argument, NULL, 'w' },
 #if 0
     { "colour", no_argument, NULL, 'c' },
     { "no-colour", no_argument, NULL, 'n' },
@@ -145,7 +146,7 @@ int init(void)
     char *proxy_url = NULL;
 
     while ((optc = getopt_long(test_argc, test_argv, 
-			       "d:hfp", longopts, NULL)) != -1) {
+			       "d:hf::w::p", longopts, NULL)) != -1) {
 	switch (optc) {
 	case 'd':
 	    htdocs_root = optarg;
@@ -154,7 +155,20 @@ int init(void)
 	    proxy_url = optarg;
 	    break;
     case 'f':
-        abort_on_fail = 1;
+        if (optarg) {
+            abort_on_fail = atoi(optarg);
+        } else {
+            abort_on_fail = 1;
+        }
+        printf("Program will abort after %d failed tests.\n", abort_on_fail);
+        break;
+    case 'w':
+        if (optarg) {
+            abort_on_warning = atoi(optarg);
+        } else {
+            abort_on_warning = 1;
+        }
+        printf("Program will abort after %d warnings.\n", abort_on_warning);
         break;
 	case 'h':
 	    usage(stdout);
